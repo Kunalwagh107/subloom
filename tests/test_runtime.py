@@ -1,5 +1,6 @@
 import hashlib
 import io
+from types import SimpleNamespace
 import zipfile
 
 import pytest
@@ -10,6 +11,8 @@ from subloom.runtime import GPU_FILES, install_gpu
 
 @pytest.fixture
 def gpu_archive(tmp_path, monkeypatch):
+    # Tiny synthetic archives must not depend on the host/tmpfs capacity.
+    monkeypatch.setattr("subloom.runtime.shutil.disk_usage", lambda _path: SimpleNamespace(free=2 * 1024**3))
     path = tmp_path / "runtime.zip"
     with zipfile.ZipFile(path, "w") as zipped:
         for name in GPU_FILES:
@@ -44,3 +47,16 @@ def test_gpu_download_cancel_cleanup_and_hash_error(tmp_path, monkeypatch, cance
     path.write_bytes(b"x" * len(content))
     with pytest.raises(SubloomError, match="checksum"):
         install_gpu(tmp_path / "installed", Cancellation(), lambda *_: None, path)
+
+
+def test_gpu_low_disk_blocks_install_and_preserves_existing_runtime(tmp_path, monkeypatch, cancel):
+    target = tmp_path / "installed"
+    target.mkdir()
+    existing = target / "whisper-cli.exe"
+    existing.write_bytes(b"existing runtime")
+    monkeypatch.setattr("subloom.runtime.shutil.disk_usage", lambda _path: SimpleNamespace(free=1024**3))
+    monkeypatch.setattr("urllib.request.urlopen", lambda *_a, **_k: pytest.fail("Low disk must block before download"))
+    with pytest.raises(SubloomError, match="1.6 GB"):
+        install_gpu(target, cancel, lambda *_: None)
+    assert existing.read_bytes() == b"existing runtime"
+    assert not list(tmp_path.glob("gpu-install-*"))

@@ -25,6 +25,9 @@ release binaries from the build context.
 
 The default selection runs core/media/downloader/cache/backend unit checks. GUI
 and actual-ASR tests are excluded. Model-dependent checks never download weights.
+The temporary filesystem is bounded to 1 GB. Tiny GPU archive unit fixtures use
+controlled free-space values, and a separate regression test verifies that real
+installation still rejects insufficient space before downloading or replacing files.
 
 ## Optional actual CPU ASR
 

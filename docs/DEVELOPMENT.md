@@ -49,6 +49,12 @@ Synthetic clips test implementation paths. They do not substitute for a Hindi
 speaker's review of natural mixed-language recordings. Record skipped tests and
 verification gaps rather than counting skipped model/hardware checks as passes.
 
+GitHub Actions runs the Windows checks and the offline Docker backend checks on
+pinned runner images. Push a change or use **Actions → Checks → Run workflow**.
+Both jobs upload JUnit reports, including when tests fail. Windows uses the
+runner's temporary directory; local nested `--basetemp` paths also work on a
+fresh checkout because the test configuration creates their missing parents.
+
 ## Build a Windows release
 
 Windows packaging must run on Windows. Install Inno Setup 6.7.3, make `ISCC.exe`

@@ -5,6 +5,14 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 
+def pytest_configure(config):
+    # pytest creates basetemp itself, but does not create missing parents.
+    # .test-data is intentionally absent from a clean source checkout.
+    basetemp = config.getoption("basetemp")
+    if basetemp:
+        Path(basetemp).expanduser().resolve().parent.mkdir(parents=True, exist_ok=True)
+
+
 @pytest.fixture
 def cancel():
     from subloom.process import Cancellation

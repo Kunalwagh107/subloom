@@ -1,24 +1,46 @@
 name: Checks
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.12'
+          cache: pip
       - run: python -m pip install -e ".[dev]"
       - run: python scripts/bootstrap_runtime.py --download
       - run: python -m ruff check src tests scripts
-      - run: python -m pytest -q -m "not asr" --basetemp=.test-data/ci
+      - name: Run Windows tests
+        run: python -m pytest -q -m "not asr" --basetemp="${{ runner.temp }}/subloom-tests" --junitxml=reports/windows.xml
         env:
           QT_QPA_PLATFORM: offscreen
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: windows-test-report
+          path: reports/windows.xml
+          if-no-files-found: warn
   docker-backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - run: docker compose build tests
-      - run: docker compose run --rm tests
+      - name: Run offline container tests
+        run: |
+          mkdir -p reports
+          chmod 0777 reports
+          docker compose run --rm --volume "$PWD/reports:/reports" tests python -m pytest -q -m "not gui and not asr" --basetemp=/tmp/subloom-tests -o cache_dir=/tmp/pytest-cache --junitxml=/reports/docker.xml
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: docker-test-report
+          path: reports/docker.xml
+          if-no-files-found: warn

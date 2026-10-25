@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import zipfile
 
 import pytest
@@ -9,6 +10,14 @@ from subloom.media import AudioTrack, Media
 from subloom.models import ModelManager
 from subloom.whisper_engine import WhisperEngine
 from package_release import source_archive, source_files
+
+
+def test_nested_pytest_base_directory_has_parent_on_clean_checkout(tmp_path):
+    from conftest import pytest_configure
+    base = tmp_path / "fresh-checkout" / ".test-data" / "ci"
+    pytest_configure(SimpleNamespace(getoption=lambda _name: str(base)))
+    assert base.parent.is_dir()
+    assert not base.exists()  # Let pytest own its cleanup/create lifecycle.
 
 
 def test_user_data_directory_respects_environment_and_platform(tmp_path, monkeypatch):
