@@ -1,3 +1,5 @@
+![Subloom — make every word readable](docs/assets/subloom-banner.svg)
+
 # Subloom
 
 **Private subtitles. Local AI. Your media stays on your computer.**
@@ -8,6 +10,27 @@ and edit them alongside real playback, then export subtitles or a captioned vide
 
 Built for **Windows 10/11, 64-bit**. CPU processing is supported; a compatible NVIDIA
 GPU is optional. No account, API key, cloud inference or subscription is required.
+
+[**Download for Windows**](https://github.com/Kunalwagh107/subloom/releases) ·
+[Quick start](#install) · [Watch the demo](#see-it-in-action) ·
+[User guide](docs/USER_GUIDE.md)
+
+![Subloom editor showing real video playback and reviewed captions](docs/assets/editor.png)
+
+## See it in action
+
+[![Animated Subloom walkthrough: import, local transcription, review and export](docs/assets/subloom-demo.gif)](docs/assets/subloom-demo.mp4)
+
+[**Watch or download the silent MP4 walkthrough**](docs/assets/subloom-demo.mp4)
+
+Captured from the actual application using a short, synthetic English recording
+and local Whisper Base on CPU. Captions are manually reviewed in the editor.
+This demonstrates the workflow; it is not a processing-speed benchmark.
+
+| Start with one recording | Choose a model that fits |
+|---|---|
+| [![Subloom welcome screen](docs/assets/welcome.png)](docs/assets/welcome.png) | [![Subloom model manager](docs/assets/models.png)](docs/assets/models.png) |
+| Drag a file in or open it locally. | Compare size, compatibility and recognition trade-offs. |
 
 ## Install
 

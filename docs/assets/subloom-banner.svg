@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="336" viewBox="0 0 1280 336">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#111c30"/><stop offset="1" stop-color="#080d16"/></linearGradient>
+    <linearGradient id="a" x2=".5" y2="1"><stop stop-color="#b3c0ff"/><stop offset="1" stop-color="#7789e8"/></linearGradient>
+    <linearGradient id="line"><stop stop-color="#93a6ff" stop-opacity="0"/><stop offset=".5" stop-color="#93a6ff"/><stop offset="1" stop-color="#93a6ff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1280" height="336" rx="24" fill="url(#bg)"/>
+  <g stroke="#263a60" fill="none" opacity=".6">
+    <circle cx="1120" cy="164" r="76"/><circle cx="1120" cy="164" r="132"/><circle cx="1120" cy="164" r="194"/>
+    <path d="M810 164h68l13-29 16 58 18-92 22 126 22-92 18 29h240" stroke="url(#line)" stroke-width="3"/>
+  </g>
+  <g transform="translate(64 72) scale(1.15)">
+    <rect width="128" height="128" rx="32" fill="url(#a)"/>
+    <path d="M88 39c-7-7-16-10-26-10-15 0-26 9-26 22 0 29 51 14 51 35 0 9-9 15-22 15-12 0-23-5-30-13" fill="none" stroke="#101a35" stroke-width="13" stroke-linecap="round"/>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="246" y="129" fill="#edf2ff" font-size="58" font-weight="600" letter-spacing="-2">subloom</text>
+    <text x="249" y="174" fill="#b7c5e0" font-size="24">Make every word readable.</text>
+    <text x="249" y="214" fill="#8699bb" font-size="14" letter-spacing="2">ENGLISH · HINDI · HINGLISH</text>
+    <rect x="64" y="264" width="244" height="30" rx="15" fill="#142e29"/>
+    <circle cx="82" cy="279" r="4" fill="#87d5b1"/>
+    <text x="95" y="284" fill="#a4e0c4" font-size="13">Local AI. Your media stays yours.</text>
+    <text x="1212" y="284" text-anchor="end" fill="#7f92b1" font-size="13" letter-spacing="1">WINDOWS DESKTOP / OPEN SOURCE</text>
+  </g>
+</svg>

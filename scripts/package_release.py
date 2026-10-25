@@ -11,6 +11,9 @@ ROOT_FILES = {"AGENTS.md", "README.md", "LICENSE", "CONTRIBUTING.md", "pyproject
               "Dockerfile", "compose.yaml", ".gitignore", ".dockerignore"}
 SOURCE_DIRS = {"src", "tests", "scripts", "packaging", "docs", "licenses", ".github"}
 SOURCE_SUFFIXES = {".py", ".ps1", ".qml", ".svg", ".ico", ".spec", ".iss", ".md", ".txt", ".html", ".yml", ".yaml", ".json"}
+PUBLIC_VISUALS = {f"docs/assets/{name}" for name in (
+    "subloom-banner.svg", "subloom-banner.png", "subloom-logo.svg", "subloom-logo.png", "welcome.png", "editor.png",
+    "models.png", "subloom-demo.gif", "subloom-demo.mp4", "README.md")}
 
 
 def source_files(root: Path) -> list[Path]:
@@ -39,7 +42,8 @@ def source_files(root: Path) -> list[Path]:
         if candidate.suffix.lower() == ".txt" and relative.parts[0] != "licenses" and not name.startswith("requirements"):
             continue
         license_notice = relative.parts[0] == "licenses" and name in {"license", "copying", "notice"}
-        if relative.as_posix() in ROOT_FILES or candidate.suffix.lower() in SOURCE_SUFFIXES or license_notice:
+        if (relative.as_posix() in ROOT_FILES | PUBLIC_VISUALS
+                or candidate.suffix.lower() in SOURCE_SUFFIXES or license_notice):
             selected.append(candidate)
     return selected
 
@@ -78,6 +82,12 @@ def main():
     docs.mkdir(exist_ok=True)
     for source in sorted((root / "docs").glob("*.md")):
         shutil.copy2(source, docs / source.name)
+    for relative in sorted(PUBLIC_VISUALS):
+        source = root / relative
+        if source.is_file():
+            destination = output / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
     installation = ("Extract the source ZIP and follow README.md to build or run from source.\n\n"
                     if args.source_only else
                     f"Windows users: run `{core_name}`. Python and Docker are not required.\n\n")

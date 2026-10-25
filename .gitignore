@@ -45,6 +45,7 @@ dist/
 settings.json
 *checkpoint*.json
 *.mp4
+!docs/assets/subloom-demo.mp4
 *.mkv
 *.mov
 *.avi

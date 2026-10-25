@@ -32,6 +32,16 @@ try {
     New-Item -ItemType Directory -Path $docsDirectory -Force | Out-Null
     Get-ChildItem -LiteralPath (Join-Path $projectRoot 'docs') -Filter '*.md' -File |
         Copy-Item -Destination $docsDirectory -Force
+    $publicAssets = Join-Path $projectRoot 'docs/assets'
+    if (Test-Path -LiteralPath $publicAssets) {
+        $assetsDestination = Join-Path $docsDirectory 'assets'
+        New-Item -ItemType Directory -Path $assetsDestination -Force | Out-Null
+        foreach ($name in @('subloom-banner.svg', 'subloom-banner.png', 'subloom-logo.svg', 'subloom-logo.png',
+                            'welcome.png', 'editor.png', 'models.png', 'subloom-demo.gif', 'subloom-demo.mp4', 'README.md')) {
+            $asset = Join-Path $publicAssets $name
+            if (Test-Path -LiteralPath $asset -PathType Leaf) { Copy-Item -LiteralPath $asset -Destination $assetsDestination -Force }
+        }
+    }
     if ($Installer) {
         $compiler = if ($env:ISCC_PATH) { $env:ISCC_PATH } elseif (Get-Command ISCC -ErrorAction SilentlyContinue) {
             (Get-Command ISCC).Source

@@ -60,12 +60,13 @@ def test_source_archive_excludes_environments_models_media_and_private_state(tmp
     root = tmp_path / "project"
     allowed = ["README.md", "LICENSE", "Dockerfile", ".gitignore", "src/subloom/app.py",
                "src/subloom/model_manifest.json", "packaging/Subloom.spec", "licenses/notice.txt", "licenses/backend/LICENSE",
-               ".github/workflows/ci.yml", "tests/test_example.py"]
+               ".github/workflows/ci.yml", "tests/test_example.py", "docs/assets/editor.png", "docs/assets/subloom-demo.mp4"]
     excluded = [".env", ".venv/secret.py", ".tools/runtime/whisper-cli.exe", "models/weights.bin",
                 "src/subloom/settings.json", "src/subloom/current.session.json", "src/subloom/checkpoint.json",
                 "src/subloom/credentials.json", "tests/fixtures/private.txt",
                 "src/subloom/__pycache__/app.pyc", "src/subloom.egg-info/SOURCES.txt", "tests/fixtures/private.wav",
-                "dist/private.zip", ".test-data/recording.mp4", "build/developer.json"]
+                "dist/private.zip", ".test-data/recording.mp4", "build/developer.json",
+                "docs/assets/private.mp4", "docs/assets/private.png"]
     for name in allowed + excluded:
         path = root / name
         path.parent.mkdir(parents=True, exist_ok=True)
