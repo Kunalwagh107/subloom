@@ -1,0 +1,12 @@
+{
+  "revision": "5359861c739e955e79d9a303bcbc70fb988958b1",
+  "source": "https://huggingface.co/api/models/ggerganov/whisper.cpp?blobs=true",
+  "format": "GGML F16 (multilingual)",
+  "backend": "whisper.cpp v1.8.3",
+  "license": "MIT",
+  "models": [
+    {"id":"base", "name":"Lightweight", "bytes":147951465, "sha256":"60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe", "description":"Relatively fast, lowest memory use. More recognition mistakes, especially in mixed speech."},
+    {"id":"small", "name":"Balanced", "bytes":487601967, "sha256":"1be3a9b2063867b937e64e2ec7483364a79917e157fa98c5d94b5c1fffea987b", "description":"Recommended starting point with enough RAM. Slower than Base; better recognition."},
+    {"id":"medium", "name":"Higher Accuracy", "bytes":1533763059, "sha256":"6c14d5adee5f86394037b4e4e8b59f1673b6cee10e3cf0b11bbdbee79c156208", "description":"Higher recognition quality. Slow on CPU and needs substantially more memory."}
+  ]
+}

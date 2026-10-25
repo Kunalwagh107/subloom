@@ -1,0 +1,11 @@
+services:
+  tests:
+    image: subloom-backend-tests:local
+    build:
+      context: .
+      target: tests
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /tmp:rw,exec,size=1g
+    init: true
